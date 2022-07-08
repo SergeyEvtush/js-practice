@@ -885,3 +885,43 @@ function filter(array, test) {
 	return passed;
 }
 /* console.log(SCRIPTS.filter(s=>s.direction=="ttb")); */
+/*Замыкание - это возможность функции ,которая  нах-ся внутри другой функции,получать доступ к переменным котрые находятся в области
+видимости родительской функции,даже после того как родительская функция прекратила свое выполнение*/
+function external() { 
+	const externalVar = 'Я внешняя функция';
+	function internal() { 
+		const internalVar = 'Я внутренняя функция';
+		console.log('internalVar>', internalVar);
+		console.log('externalVar>',externalVar);
+		
+	}
+	return internal;
+}
+const internalFn = external();
+internalFn();
+/* console.log(internalFn); */
+function createAddress(type) { 
+	const address = type.toUpperCase();
+	return function (name) { 
+		return `${address} ${name}`;
+	}
+}
+const addressGrazdanin = createAddress('Гражданин');
+const addressGrazdanka = createAddress('Гражданка');
+console.log(addressGrazdanin('Vasyly'));
+console.log(addressGrazdanka('Marusya'));
+function createPlayer(name) { 
+	let score = 0;
+	return function scoreCount() { 
+		score++;
+		return `${name}- ${score} баллов`;
+	}
+}
+const player1 = createPlayer('Vasya');
+
+const player2 = createPlayer('Misha');
+console.log(player1());
+console.log(player2());
+console.log(player1());
+console.log(player2());
+console.log(player1());
